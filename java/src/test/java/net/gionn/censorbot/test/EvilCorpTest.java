@@ -20,12 +20,11 @@ public class EvilCorpTest
     public void v2()
     {
         CensorBot censorBot = new CensorBot();
-        String[] blackWords = { "nice", "pony", "sun", "light", "fun", "happy", "funny", "joy" };
+        String[] blackWords = {"nice", "pony", "sun", "light", "fun", "happy", "funny", "joy"};
         for ( String blackWord : blackWords )
         {
             censorBot.addCensoredWord( blackWord );
         }
-
         censorBot.setInputText( "Such a nice day with a bright sun, makes me happy" );
         assertThat( censorBot.getCensoredText() ).isEqualTo( "Such a XXXX day with a bright XXX, makes me XXXXX" );
     }
@@ -54,10 +53,10 @@ public class EvilCorpTest
     {
         CensorBot censorship = new CensorBot();
         censorship.setInputText( "Objection is bad, a better thing to do, is to agree." );
-        censorship.addReplacemnetWord( "bad", "ungood" );
-        censorship.addReplacemnetWord( "better", "gooder" );
-        censorship.addReplacemnetWord( "objection", "thoughtcrime" );
-        censorship.addReplacemnetWord( "agree", "crimestop" );
+        censorship.addReplacementWord( "bad", "ungood" );
+        censorship.addReplacementWord( "better", "gooder" );
+        censorship.addReplacementWord( "objection", "thoughtcrime" );
+        censorship.addReplacementWord( "agree", "crimestop" );
         assertThat( censorship.getCensoredText() )
                 .isEqualTo( "Thoughtcrime is ungood, a gooder thing to do, is to crimestop." );
     }

@@ -46,7 +46,7 @@ public class CensorBot
         char[] chars = word.toCharArray();
         for ( int i = 1; i < chars.length; i++ )
         {
-            if ( chars[i - 1] == censorSymbol && ( Character.isLetter( chars[i] ) || chars[i] == '!' ) )
+            if ( chars[i - 1] == censorSymbol && ( Character.isLetter( chars[i] ) || chars[i] == '!') )
             {
                 chars[i] = censorSymbol;
             }
@@ -55,35 +55,20 @@ public class CensorBot
     }
 
     /**
-     *
-     * @param word the string to obfuscate
+     * @param word        the string to obfuscate
      * @param replacement the string used for obfuscation
      * @return an obfuscated string
      */
     private String obfuscate( String word, String replacement )
     {
         if ( replacement.length() == 1 )
+        {
             return StringUtils.repeat( replacement, word.length() );
+        }
         else
         {
-            replacement = alignFirstCase( word, replacement );
             return replacement;
         }
-    }
-
-    /**
-     *
-     * @param referenceString the string to check if has first character uppercase
-     * @param alignedString the string return first first character in che corrent case
-     * @return alignedString with first character uppercase if referenceString has first character uppercase
-     */
-    private String alignFirstCase( String referenceString, String alignedString )
-    {
-        if ( isFirstUppercase( referenceString ) )
-        {
-            alignedString = toUppercaseFirst( alignedString );
-        }
-        return alignedString;
     }
 
     private String toUppercaseFirst( String alignedString )
@@ -99,16 +84,16 @@ public class CensorBot
         return Character.isUpperCase( referenceString.charAt( 0 ) );
     }
 
-    // getset
+    //region getter setter
     public void addCensoredWord( String censored )
     {
         blacklist.put( censored, censorSymbol.toString() );
     }
 
-    public void addReplacemnetWord( String censored, String replacement )
+    public void addReplacementWord( String censored, String replacement )
     {
         blacklist.put( censored, replacement );
-        if ( ! isFirstUppercase( censored ) )
+        if ( !isFirstUppercase( censored ) )
         {
             blacklist.put( toUppercaseFirst( censored ), toUppercaseFirst( replacement ) );
         }
@@ -123,5 +108,5 @@ public class CensorBot
     {
         this.censorSymbol = symbol.charAt( 0 );
     }
-    // end
+    //endregion
 }
