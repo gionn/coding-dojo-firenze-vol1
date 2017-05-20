@@ -30,23 +30,18 @@ public class CensorBot
         for ( Map.Entry<String, String> blacklistEntry : blacklist.entrySet() )
         {
             String blacklistedWord = blacklistEntry.getKey();
-            if ( word.toUpperCase().contains( blacklistedWord.toUpperCase() ) )
+            if ( word.contains( blacklistedWord ) )
             {
                 String replacement = blacklistEntry.getValue();
                 String obfuscated = obfuscate( blacklistedWord, replacement );
-                if ( isFirstUppercase( word ) )
-                {
-                    blacklistedWord = toUppercaseFirst( blacklistedWord );
-                    obfuscated = toUppercaseFirst( obfuscated );
-                }
                 word = word.replace( blacklistedWord, obfuscated );
-                word = completeObfuscationToTheEnd( word );
+                word = finishObfuscation( word );
             }
         }
         return word;
     }
 
-    private String completeObfuscationToTheEnd( String word )
+    private String finishObfuscation( String word )
     {
         char[] chars = word.toCharArray();
         for ( int i = 1; i < chars.length; i++ )
@@ -113,6 +108,10 @@ public class CensorBot
     public void addReplacemnetWord( String censored, String replacement )
     {
         blacklist.put( censored, replacement );
+        if ( ! isFirstUppercase( censored ) )
+        {
+            blacklist.put( toUppercaseFirst( censored ), toUppercaseFirst( replacement ) );
+        }
     }
 
     public void setInputText( String inputText )
